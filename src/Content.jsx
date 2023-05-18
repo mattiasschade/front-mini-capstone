@@ -1,15 +1,25 @@
-import {ProductsIndex} from "./ProductsIndex"
+import axios from "axios"
+import { useState, useEffect } from "react"
+
+import { ProductsIndex } from "./ProductsIndex"
+import { Signup } from "./Signup"
 
 export function Content () {
-  const products = [
-    {id: 1, name: "apple", description: "an apple a day keeps the doctor away"},
-    {id: 2, name: "pineapple", description: "a prickly, but delightful, fruit."}
-  ];
+  const [products, setProducts] = useState([]);
 
+  const handleIndexProducts = () => {
+    console.log("handleIndexProducts");
+    axios.get("http://localhost:3000/products.json").then((response) => {
+      console.log(response.data);
+      setProducts(response.data);
+    });
+  };
+
+  useEffect(handleIndexProducts, []);
 
   return(
     <div>
-      <h1>Content</h1>
+      <Signup />
       <ProductsIndex products={products}/>
     </div>
   )
