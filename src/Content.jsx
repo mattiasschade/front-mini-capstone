@@ -7,6 +7,7 @@ import { Login } from "./Login"
 import { LogoutLink } from "./Logout"
 import { Modal } from "./Modal"
 import { ProductShow } from "./ProductShow"
+import { ProductsNew } from "./ProductsNew"
 
 export function Content () {
   const [products, setProducts] = useState([]);
@@ -27,6 +28,14 @@ export function Content () {
     console.log("handleShowProduct", product);
     setIsProductsShowVisible(true);
     setCurrentProduct(product);
+  };
+
+  const handleCreateProduct = (params, successCallback) => {
+    console.log("handleCreateProduct", params);
+    axios.post("http://localhost:3000/products.json", params).then((response) => {
+      setProducts([...products, response.data]);
+      successCallback();
+    });
   };
 
   const handleUpdateProduct = (id, params, successCallback) => {
@@ -51,6 +60,14 @@ export function Content () {
     setIsProductsShowVisible(false);
   };
 
+  const handleDestroyProduct = (product) => {
+    console.log("handleDestroyProduct", product);
+    axios.delete(`http://localhost:3000/products/${product.id}.json`).then((response) => {
+      setProducts(products.filter((p) => p.id !== product.id));
+      handleClose();
+    });
+  };
+
   
 
   return(
@@ -58,9 +75,10 @@ export function Content () {
       <Signup />
       <Login />
       <LogoutLink />
+      <ProductsNew onCreateProduct={handleCreateProduct}/>
       <ProductsIndex products={products} onShowProduct={handleShowProduct}/>
       <Modal show={isProductsShowVisible} onClose={handleClose}>
-        <ProductShow product={currentProduct} onUpdateProduct={handleUpdateProduct}/>
+        <ProductShow product={currentProduct} onUpdateProduct={handleUpdateProduct} onDestroyProduct={handleDestroyProduct}/>
       </Modal>
     </div>
   )
