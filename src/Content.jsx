@@ -1,5 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
+import { Routes, Route } from "react-router-dom";
+import { About } from "./About";
 
 import { ProductsIndex } from "./ProductsIndex"
 import { Signup } from "./Signup"
@@ -71,7 +73,11 @@ export function Content () {
   
 
   return(
-    <div>
+    <div className="container">
+      <Routes>
+        <Route path="/about" element={<About />} />
+      </Routes>
+      
       <Signup />
       <Login />
       <LogoutLink />

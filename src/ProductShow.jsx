@@ -15,7 +15,8 @@ export function ProductShow(props) {
       <h1>Product Information</h1>
       <p>Name: {props.product.name}</p>
       <p>Price: {props.product.price}</p>
-      <p>Description: {props.product.description}</p>
+      <p>Description: {props.product.description}
+      </p>
       <form onSubmit={handleSubmit}>
         <div>
           Name: <input defaultValue={props.product.name} name="name" type="text" />
