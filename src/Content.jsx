@@ -10,6 +10,8 @@ import { LogoutLink } from "./Logout"
 import { Modal } from "./Modal"
 import { ProductShow } from "./ProductShow"
 import { ProductsNew } from "./ProductsNew"
+import { ProductsShowSeparate } from "./ProductsShowSeparate"
+import { CartedProductsIndex } from "./CartedProductsIndex";
 
 export function Content () {
   const [products, setProducts] = useState([]);
@@ -76,13 +78,16 @@ export function Content () {
     <div className="container">
       <Routes>
         <Route path="/about" element={<About />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<LogoutLink />} />
+        <Route path="/carted_products" element={<CartedProductsIndex />} />
+        <Route path="/products/new" element={<ProductsNew onCreateProduct={handleCreateProduct}/>} />
+        <Route path="/" element={<ProductsIndex products={products} onShowProduct={handleShowProduct}/>} />
+        <Route path="/products/:id" element={<ProductsShowSeparate />} />
       </Routes>
       
-      <Signup />
-      <Login />
-      <LogoutLink />
-      <ProductsNew onCreateProduct={handleCreateProduct}/>
-      <ProductsIndex products={products} onShowProduct={handleShowProduct}/>
+  
       <Modal show={isProductsShowVisible} onClose={handleClose}>
         <ProductShow product={currentProduct} onUpdateProduct={handleUpdateProduct} onDestroyProduct={handleDestroyProduct}/>
       </Modal>
