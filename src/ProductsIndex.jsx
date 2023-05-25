@@ -7,7 +7,12 @@ export function ProductsIndex(props) {
   return (
     <div>
     <h1> Products </h1>
-    <p> Search <input type="text" value={searchFilter} onChange={(event) => {setSearchFilter(event.target.value)}} /> </p>
+    <p> Search <input type="text" value={searchFilter} onChange={(event) => {setSearchFilter(event.target.value)}} list="names" /> </p>
+      <datalist id="names">
+        {props.products.map(product => (
+          <option key={product.id}>{product.name}</option>
+        ))}
+      </datalist>
       {props.products.filter(product => product.name.toLowerCase().includes(searchFilter.toLowerCase())).map((product) => (
       <div key={product.id}>
         <h2>{product.name}</h2>
